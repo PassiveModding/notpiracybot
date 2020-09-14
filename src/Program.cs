@@ -57,7 +57,8 @@ namespace notpiracybot
             }
 
             IServiceCollection botServiceCollection = new ServiceCollection()
-                .AddSingleton<HttpClient>();
+                .AddSingleton<HttpClient>()
+                .AddSingleton(new CachingMechanism.EntityCache(60));
 
             // Gets services marked with the Service attribute, adds them to the service collection
             var services = Assembly.GetExecutingAssembly().GetServices();

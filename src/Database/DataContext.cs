@@ -3,12 +3,15 @@ using Disqord.Bot;
 using Microsoft.EntityFrameworkCore;
 using Passive.Discord.Setup;
 using System.Linq;
+using notpiracybot.Entities;
 
 namespace notpiracybot
 {
     public class DataContext : DbContext
     {
         public DbSet<AssignableRole> Roles { get; set; }
+
+        public DbSet<ReactableRoleMessage> RoleMessages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,6 +30,11 @@ namespace notpiracybot
             modelBuilder.Entity<AssignableRole>(e =>
             {
                 e.HasKey(x => new { x.GuildId, x.RoleId });
+            });
+
+            modelBuilder.Entity<ReactableRoleMessage>(e =>
+            {
+                e.HasKey(x => new { x.GuildId, x.ChannelId, x.MessageId });
             });
         }
     }
